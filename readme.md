@@ -1,16 +1,16 @@
-# LevelDB JNI
+# RocksDB JNI
 
 ## Description
 
-LevelDB JNI gives you a Java interface to the 
-[LevelDB](http://code.google.com/p/leveldb/) C++ library
+RocksDB JNI gives you a Java interface to the 
+[RocksDB](http://code.google.com/p/rocksdb/) C++ library
 which is a fast key-value storage library written at Google 
 that provides an ordered mapping from string keys to string values.. 
 
 # Getting the JAR
 
 Just add the following jar to your java project:
-[leveldbjni-all-1.7.jar](http://repo2.maven.org/maven2/org/fusesource/leveldbjni/leveldbjni-all/1.7/leveldbjni-all-1.7.jar)
+[rocksdbjni-all-1.7.jar](http://repo2.maven.org/maven2/org/fusesource/rocksdbjni/rocksdbjni-all/1.7/rocksdbjni-all-1.7.jar)
 
 ## Using as a Maven Dependency
 
@@ -18,8 +18,8 @@ You just nee to add the following dependency to your Maven pom.
 
     <dependencies>
       <dependency>
-        <groupId>org.fusesource.leveldbjni</groupId>
-        <artifactId>leveldbjni-all</artifactId>
+        <groupId>org.fusesource.rocksdbjni</groupId>
+        <artifactId>rocksdbjni-all</artifactId>
         <version>1.7</version>
       </dependency>
     </dependencies>
@@ -28,8 +28,8 @@ You just nee to add the following dependency to your Maven pom.
 
 Recommended Package imports:
 
-    import org.iq80.leveldb.*;
-    import static org.fusesource.leveldbjni.JniDBFactory.*;
+    import org.iq80.rocksdb.*;
+    import static org.fusesource.rocksdbjni.JniDBFactory.*;
     import java.io.*;
 
 Opening and closing the database.
@@ -134,7 +134,7 @@ Getting approximate sizes.
     
 Getting database status.
 
-    String stats = db.getProperty("leveldb.stats");
+    String stats = db.getProperty("rocksdb.stats");
     System.out.println(stats);
 
 Getting informational log messages.
@@ -185,20 +185,20 @@ The following worked for me on:
 
 ### Build Procedure
 
-Then download the snappy, leveldb, and leveldbjni project source code:
+Then download the snappy, rocksdb, and rocksdbjni project source code:
 
     wget http://snappy.googlecode.com/files/snappy-1.0.5.tar.gz
     tar -zxvf snappy-1.0.5.tar.gz
-    git clone git://github.com/chirino/leveldb.git
-    git clone git://github.com/fusesource/leveldbjni.git
+    git clone git://github.com/chirino/rocksdb.git
+    git clone git://github.com/fusesource/rocksdbjni.git
     export SNAPPY_HOME=`cd snappy-1.0.5; pwd`
-    export LEVELDB_HOME=`cd leveldb; pwd`
-    export LEVELDBJNI_HOME=`cd leveldbjni; pwd`
+    export ROCKSDB_HOME=`cd rocksdb; pwd`
+    export rocksdbjni_HOME=`cd rocksdbjni; pwd`
 
 <!-- In cygwin that would be
     export SNAPPY_HOME=$(cygpath -w `cd snappy-1.0.5; pwd`)
-    export LEVELDB_HOME=$(cygpath -w `cd leveldb; pwd`)
-    export LEVELDBJNI_HOME=$(cygpath -w `cd leveldbjni; pwd`)
+    export ROCKSDB_HOME=$(cygpath -w `cd rocksdb; pwd`)
+    export rocksdbjni_HOME=$(cygpath -w `cd rocksdbjni; pwd`)
 -->  
 
 Compile the snappy project.  This produces a static library.    
@@ -207,18 +207,18 @@ Compile the snappy project.  This produces a static library.
     ./configure --disable-shared --with-pic
     make
     
-Patch and Compile the leveldb project.  This produces a static library.    
+Patch and Compile the rocksdb project.  This produces a static library.    
     
-    cd ${LEVELDB_HOME}
+    cd ${ROCKSDB_HOME}
     export LIBRARY_PATH=${SNAPPY_HOME}
     export C_INCLUDE_PATH=${LIBRARY_PATH}
     export CPLUS_INCLUDE_PATH=${LIBRARY_PATH}
-    git apply ../leveldbjni/leveldb.patch
-    make libleveldb.a
+    git apply ../rocksdbjni/rocksdb.patch
+    make librocksdb.a
 
-Now use maven to build the leveldbjni project.    
+Now use maven to build the rocksdbjni project.    
     
-    cd ${LEVELDBJNI_HOME}
+    cd ${rocksdbjni_HOME}
     mvn clean install -P download -P ${platform}
 
 Replace ${platform} with one of the following platform identifiers (depending on the platform your building on):
@@ -230,15 +230,15 @@ Replace ${platform} with one of the following platform identifiers (depending on
 * win64
 
 If your platform does not have the right auto-tools levels available
-just copy the `leveldbjni-${version}-SNAPSHOT-native-src.zip` artifact
+just copy the `rocksdbjni-${version}-SNAPSHOT-native-src.zip` artifact
 from a platform the does have the tools available then add the
 following argument to your maven build:
 
-   -Dnative-src-url=file:leveldbjni-${verision}-SNAPSHOT-native-src.zip
+   -Dnative-src-url=file:rocksdbjni-${verision}-SNAPSHOT-native-src.zip
 
 ### Build Results
 
-* `leveldbjni/target/leveldbjni-${version}.jar` : The java class file to the library.
-* `leveldbjni/target/leveldbjni-${version}-native-src.zip` : A GNU style source project which you can use to build the native library on other systems.
-* `leveldbjni-${platform}/target/leveldbjni-${platform}-${version}.jar` : A jar file containing the built native library using your currently platform.
+* `rocksdbjni/target/rocksdbjni-${version}.jar` : The java class file to the library.
+* `rocksdbjni/target/rocksdbjni-${version}-native-src.zip` : A GNU style source project which you can use to build the native library on other systems.
+* `rocksdbjni-${platform}/target/rocksdbjni-${platform}-${version}.jar` : A jar file containing the built native library using your currently platform.
     

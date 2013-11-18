@@ -39,24 +39,24 @@
     <version>1.9</version>
   </parent>
 
-  <groupId>org.fusesource.leveldbjni</groupId>
-  <artifactId>leveldbjni-project</artifactId>
+  <groupId>org.fusesource.rocksdbjni</groupId>
+  <artifactId>rocksdbjni-project</artifactId>
   <version>99-master-SNAPSHOT</version>
   <packaging>pom</packaging>
   
   <name>${project.artifactId}</name>
-  <description>leveldbjni is a jni library for accessing leveldb.</description>
+  <description>rocksdbjni is a jni library for accessing rocksdb.</description>
   
   <properties>
-    <forge-project-id>leveldbjni</forge-project-id>
-    <forge-project-id-uc>LEVELDBJNI</forge-project-id-uc>
+    <forge-project-id>rocksdbjni</forge-project-id>
+    <forge-project-id-uc>rocksdbjni</forge-project-id-uc>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <hawtjni-version>1.9</hawtjni-version>
     <leveldb-api-version>0.6</leveldb-api-version>
   </properties>
   
   <modules>
-    <module>leveldbjni</module>
+    <module>rocksdbjni</module>
   </modules>
   
   <url>http://${forge-project-id}.fusesource.org</url>
@@ -64,7 +64,7 @@
 
   <issueManagement>
     <system>github</system>
-    <url>https://github.com/fusesource/leveldbjni/issues</url>
+    <url>https://github.com/fusesource/rocksdbjni/issues</url>
   </issueManagement>
   
   <mailingLists>
@@ -89,9 +89,9 @@
   </licenses>
   
   <scm>
-    <connection>scm:git:git://github.com/fusesource/leveldbjni.git</connection>
-    <developerConnection>scm:git:git@github.com:fusesource/leveldbjni.git</developerConnection>
-    <url>https://github.com/fusesource/leveldbjni</url>
+    <connection>scm:git:git://github.com/fusesource/rocksdbjni.git</connection>
+    <developerConnection>scm:git:git@github.com:fusesource/rocksdbjni.git</developerConnection>
+    <url>https://github.com/fusesource/rocksdbjni</url>
   </scm>
 
   <distributionManagement>
@@ -243,39 +243,39 @@
     <profile>
       <id>full</id>
       <modules>
-        <module>leveldbjni-osx</module>
-        <module>leveldbjni-linux32</module>
-        <module>leveldbjni-linux64</module>
-        <module>leveldbjni-win32</module>
-        <module>leveldbjni-win64</module>
-        <module>leveldbjni-all</module>
+        <module>rocksdbjni-osx</module>
+        <module>rocksdbjni-linux32</module>
+        <module>rocksdbjni-linux64</module>
+        <module>rocksdbjni-win32</module>
+        <module>rocksdbjni-win64</module>
+        <module>rocksdbjni-all</module>
       </modules>
     </profile>    
 
     <profile>
       <id>all</id>
       <modules>
-        <module>leveldbjni-all</module>
+        <module>rocksdbjni-all</module>
       </modules>
     </profile>    
     <profile>
       <id>osx</id>
       <modules>
-        <module>leveldbjni-osx</module>
+        <module>rocksdbjni-osx</module>
       </modules>
     </profile>
 
     <profile>
       <id>linux32</id>
       <modules>
-        <module>leveldbjni-linux32</module>
+        <module>rocksdbjni-linux32</module>
       </modules>
     </profile>
 
     <profile>
       <id>linux64</id>
       <modules>
-        <module>leveldbjni-linux64</module>
+        <module>rocksdbjni-linux64</module>
       </modules>
     </profile>
 
@@ -285,7 +285,7 @@
         <skipAutogen>true</skipAutogen>
       </properties>
       <modules>
-        <module>leveldbjni-win32</module>
+        <module>rocksdbjni-win32</module>
       </modules>
     </profile>
 
@@ -295,7 +295,7 @@
         <skipAutogen>true</skipAutogen>
       </properties>
       <modules>
-        <module>leveldbjni-win64</module>
+        <module>rocksdbjni-win64</module>
       </modules>
     </profile>
 
