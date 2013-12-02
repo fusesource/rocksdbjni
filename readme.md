@@ -3,14 +3,14 @@
 ## Description
 
 RocksDB JNI gives you a Java interface to the 
-[RocksDB](http://code.google.com/p/rocksdb/) C++ library
-which is a fast key-value storage library written at Google 
-that provides an ordered mapping from string keys to string values.. 
+[RocksDB](http://rocksdb.org/) C++ library
+which is an embeddable persistent key-value store for fast storage. 
 
+<!-- TODO:
 # Getting the JAR
 
 Just add the following jar to your java project:
-[rocksdbjni-all-1.7.jar](http://repo2.maven.org/maven2/org/fusesource/rocksdbjni/rocksdbjni-all/1.7/rocksdbjni-all-1.7.jar)
+[rocksdbjni-all-1.0.jar](http://repo2.maven.org/maven2/org/fusesource/rocksdbjni/rocksdbjni-all/1.0/rocksdbjni-all-1.0.jar)
 
 ## Using as a Maven Dependency
 
@@ -20,9 +20,10 @@ You just nee to add the following dependency to your Maven pom.
       <dependency>
         <groupId>org.fusesource.rocksdbjni</groupId>
         <artifactId>rocksdbjni-all</artifactId>
-        <version>1.7</version>
+        <version>1.0</version>
       </dependency>
     </dependencies>
+-->
 
 ## API Usage:
 
@@ -121,11 +122,13 @@ Disabling Compression
     options.compressionType(CompressionType.NONE);
     DB db = factory.open(new File("example"), options);
 
+<!--
 Configuring the Cache
     
     Options options = new Options();
     options.cacheSize(100 * 1048576); // 100MB cache
     DB db = factory.open(new File("example"), options);
+-->
 
 Getting approximate sizes.
 
@@ -137,6 +140,7 @@ Getting database status.
     String stats = db.getProperty("rocksdb.stats");
     System.out.println(stats);
 
+<!-- 
 Getting informational log messages.
 
     Logger logger = new Logger() {
@@ -147,6 +151,7 @@ Getting informational log messages.
     Options options = new Options();
     options.logger(logger);
     DB db = factory.open(new File("example"), options);
+-->
 
 Destroying a database.
     
@@ -189,16 +194,16 @@ Then download the snappy, rocksdb, and rocksdbjni project source code:
 
     wget http://snappy.googlecode.com/files/snappy-1.0.5.tar.gz
     tar -zxvf snappy-1.0.5.tar.gz
-    git clone git://github.com/chirino/rocksdb.git
+    git clone git@github.com:facebook/rocksdb.git
     git clone git://github.com/fusesource/rocksdbjni.git
     export SNAPPY_HOME=`cd snappy-1.0.5; pwd`
     export ROCKSDB_HOME=`cd rocksdb; pwd`
-    export rocksdbjni_HOME=`cd rocksdbjni; pwd`
+    export ROCKSDBJNI_HOME=`cd rocksdbjni; pwd`
 
 <!-- In cygwin that would be
     export SNAPPY_HOME=$(cygpath -w `cd snappy-1.0.5; pwd`)
     export ROCKSDB_HOME=$(cygpath -w `cd rocksdb; pwd`)
-    export rocksdbjni_HOME=$(cygpath -w `cd rocksdbjni; pwd`)
+    export ROCKSDBJNI_HOME=$(cygpath -w `cd rocksdbjni; pwd`)
 -->  
 
 Compile the snappy project.  This produces a static library.    
@@ -213,28 +218,24 @@ Patch and Compile the rocksdb project.  This produces a static library.
     export LIBRARY_PATH=${SNAPPY_HOME}
     export C_INCLUDE_PATH=${LIBRARY_PATH}
     export CPLUS_INCLUDE_PATH=${LIBRARY_PATH}
-    git apply ../rocksdbjni/rocksdb.patch
     make librocksdb.a
 
 Now use maven to build the rocksdbjni project.    
     
-    cd ${rocksdbjni_HOME}
-    mvn clean install -P download -P ${platform}
+    cd ${ROCKSDBJNI_HOME}
+    mvn clean install
 
-Replace ${platform} with one of the following platform identifiers (depending on the platform your building on):
+The cd to the platform specific directory that matches your platform
 
-* osx
-* linux32
-* linux64
-* win32
-* win64
+* rocksdbjni-osx
+* rocksdbjni-linux32
+* rocksdbjni-linux64
+* rocksdbjni-win32
+* rocksdbjni-win64
 
-If your platform does not have the right auto-tools levels available
-just copy the `rocksdbjni-${version}-SNAPSHOT-native-src.zip` artifact
-from a platform the does have the tools available then add the
-following argument to your maven build:
+And then run:
 
-   -Dnative-src-url=file:rocksdbjni-${verision}-SNAPSHOT-native-src.zip
+    mvn clean install
 
 ### Build Results
 
