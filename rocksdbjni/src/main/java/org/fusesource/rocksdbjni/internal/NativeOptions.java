@@ -77,15 +77,11 @@ public class NativeOptions {
 
     @JniField(flags={FIELD_SKIP})
     private NativeLogger infoLogObject = null;
-    @JniField(cast="rocksdb::Logger*")
-    private long info_log = 0;
+//    @JniField(cast="rocksdb::Logger*")
+//    private long info_log = 0;
 
     @JniField(cast="rocksdb::Env*")
     private long env = DEFAULT_ENV;
-    @JniField(cast="rocksdb::Cache*")
-    private long block_cache = 0;
-    @JniField(flags={FIELD_SKIP})
-    private NativeCache cache;
 
     @JniField(cast="rocksdb::CompressionType")
     private int compression = NativeCompressionType.kSnappyCompression.value;
@@ -168,11 +164,11 @@ public class NativeOptions {
 
     public NativeOptions infoLog(NativeLogger logger) {
         this.infoLogObject = logger;
-        if( logger ==null ) {
-            this.info_log = 0;
-        } else {
-            this.info_log = logger.pointer();
-        }
+//        if( logger ==null ) {
+//            this.info_log = 0;
+//        } else {
+//            this.info_log = logger.pointer();
+//        }
         return this;
     }
 
@@ -191,17 +187,4 @@ public class NativeOptions {
         return this;
     }
 
-    public NativeCache cache() {
-        return cache;
-    }
-
-    public NativeOptions cache(NativeCache cache) {
-        this.cache = cache;
-        if( cache!=null ) {
-            this.block_cache = cache.pointer();
-        } else {
-            this.block_cache = 0;
-        }
-        return this;
-    }
 }

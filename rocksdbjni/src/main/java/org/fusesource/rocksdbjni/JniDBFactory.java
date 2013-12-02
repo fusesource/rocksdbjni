@@ -88,7 +88,6 @@ public class JniDBFactory implements DBFactory {
 
     static private class OptionsResourceHolder {
 
-        NativeCache cache = null;
         NativeComparator comparator=null;
         NativeLogger logger=null;
         NativeOptions options;
@@ -111,12 +110,6 @@ public class JniDBFactory implements DBFactory {
                 case SNAPPY:
                     options.compression(NativeCompressionType.kSnappyCompression);
                     break;
-            }
-
-
-            if(value.cacheSize()>0 ) {
-                cache = new NativeCache(value.cacheSize());
-                options.cache(cache);
             }
 
             final DBComparator userComparator = value.comparator();
@@ -148,9 +141,6 @@ public class JniDBFactory implements DBFactory {
 
         }
         public void close() {
-            if(cache!=null) {
-                cache.delete();
-            }
             if(comparator!=null){
                 comparator.delete();
             }
@@ -173,7 +163,7 @@ public class JniDBFactory implements DBFactory {
                 holder.close();
             }
         }
-        return new JniDB(db, holder.cache, holder.comparator, holder.logger);
+        return new JniDB(db, holder.comparator, holder.logger);
     }
 
     public void destroy(File path, Options options) throws IOException {

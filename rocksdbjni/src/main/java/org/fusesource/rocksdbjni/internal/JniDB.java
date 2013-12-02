@@ -39,13 +39,11 @@ import org.iq80.leveldb.*;
 public class JniDB implements DB {
 
     private NativeDB db;
-    private NativeCache cache;
     private NativeComparator comparator;
     private NativeLogger logger;
 
-    public JniDB(NativeDB db, NativeCache cache, NativeComparator comparator, NativeLogger logger) {
+    public JniDB(NativeDB db, NativeComparator comparator, NativeLogger logger) {
         this.db = db;
-        this.cache = cache;
         this.comparator = comparator;
         this.logger = logger;
     }
@@ -54,10 +52,6 @@ public class JniDB implements DB {
         if( db!=null ) {
             db.delete();
             db = null;
-            if(cache!=null) {
-                cache.delete();
-                cache = null;
-            }
             if(comparator!=null){
                 comparator.delete();
                 comparator = null;
@@ -211,67 +205,12 @@ public class JniDB implements DB {
         db.compactRange(begin, end);
     }
 
-//
-//  Using a fork of rocksdb with db Suspend / Resume methods to avoid
-//  having to callback into java.
-//
     public void suspendCompactions() throws InterruptedException {
-        if( db==null ) {
-            throw new DBException("Closed");
-        }
-        db.suspendCompactions();
-    }
-    public void resumeCompactions() {
-        if( db==null ) {
-            throw new DBException("Closed");
-        }
-        db.resumeCompactions();
+        throw new UnsupportedOperationException();
     }
 
-//    private static class Suspension {
-//        static long env = Util.EnvJNI.Default();
-//
-//        CountDownLatch suspended = new CountDownLatch(1);
-//        CountDownLatch resumed = new CountDownLatch(1);
-//        Callback callback = new Callback(this, "suspended", 1);
-//
-//        public Suspension() {
-//            Util.EnvJNI.Schedule(env, callback.getAddress(), 0);
-//        }
-//
-//        private long suspended(long arg) {
-//            suspended.countDown();
-//            try {
-//                resumed.await();
-//            } catch (InterruptedException e) {
-//            } finally {
-//                callback.dispose();
-//            }
-//            return 0;
-//        }
-//    }
-//
-//    int suspendCounter = 0;
-//    Suspension suspension = null;
-//
-//    public void suspendCompactions() throws InterruptedException {
-//        Suspension s = null;
-//        synchronized (this) {
-//            suspendCounter++;
-//            if( suspendCounter==1 ) {
-//                suspension = new Suspension();
-//            }
-//            s = suspension;
-//        }
-//        // Don't return until the compactions have suspended.
-//        s.suspended.await();
-//    }
-//
-//    synchronized public void resumeCompactions() {
-//        suspendCounter--;
-//        if( suspendCounter==0 ) {
-//            suspension.resumed.countDown();
-//            suspension = null;
-//        }
-//    }
+    public void resumeCompactions() {
+        throw new UnsupportedOperationException();
+    }
+
 }
